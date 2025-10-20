@@ -15,6 +15,10 @@ export class HomePage extends BasePage {
         return this.page.locator('.inventory_item_img').first();
     }
 
+    private get twitterLink(){
+        return this.page.locator('.social_twitter a');
+    }
+
     async isProductsTitleVisible(){
         await expect(this.productsPageTitle).toBeVisible();
     }
@@ -25,5 +29,9 @@ export class HomePage extends BasePage {
 
     async ClickOnFirstProduct(){
         await this.firstProduct.click();
+    }
+
+    async clickOnTwitterLink(){
+        await this.twitterLink.click();
     }
 }

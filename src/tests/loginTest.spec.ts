@@ -12,14 +12,21 @@ test('Login Test', async ({ page }) => {
 
     await loginPage.goto()
     await loginPage.fillCredentials(validUser.username, validUser.password)
-    const loginPageScreenshot = await loginPage.takeScreenshot()
-    test.info().attach('Login Page Screenshot', { body: loginPageScreenshot, contentType: 'image/png' });
     await loginPage.clickOnLoginButton()
 
     await homePage.isProductsTitleVisible()
     await homePage.isFirstProductVisible()
+
+    const [newTab] = await Promise.all([
+        page.waitForEvent('popup'),
+        homePage.clickOnTwitterLink()
+    ]);
+    await newTab.waitForLoadState();
+    await newTab.waitForTimeout(7000); // Wait for 7 seconds because of Zscaler
+    const twitterScreenshot = await newTab.screenshot();
+    test.info().attach('Twitter Page Screenshot', { body: twitterScreenshot, contentType: 'image/png' });
+
     await homePage.ClickOnFirstProduct()
     
     await productPage.checkProductTitle('Sauce Labs Backpack')
-
 });
