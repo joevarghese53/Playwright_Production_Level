@@ -7,11 +7,23 @@ export class HomePage extends BasePage {
         super(page);
     }
     
-    private get productsTitle(){
+    private get productsPageTitle(){
         return this.page.locator('.title');
     }
 
+    private get firstProduct(){
+        return this.page.locator('.inventory_item_img').first();
+    }
+
     async isProductsTitleVisible(){
-        await expect(this.productsTitle).toBeVisible();
+        await expect(this.productsPageTitle).toBeVisible();
+    }
+
+    async isFirstProductVisible(){
+        await expect(this.firstProduct).toBeVisible();
+    }
+
+    async ClickOnFirstProduct(){
+        await this.firstProduct.click();
     }
 }

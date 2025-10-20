@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 
 export class BasePage {
 
-    protected page: Page
+    readonly page: Page
 
     constructor(page: Page) {
         this.page = page
@@ -10,6 +10,10 @@ export class BasePage {
 
     async waitForVisible(locator: Locator){
         await locator.waitFor({ state: 'visible', timeout: 5000 });
+    }
+
+    async takeScreenshot(){
+        return await this.page.screenshot();
     }
 
 }
